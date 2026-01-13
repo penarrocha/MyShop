@@ -1,0 +1,15 @@
+services: 
+
+  vite:
+    image: node:20-alpine
+    working_dir: /var/www/html
+    volumes:
+      - '.:/var/www/html'
+    ports:
+      - '${VITE_PORT}:${VITE_PORT}'
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port ${VITE_PORT}"
+    depends_on:
+      - laravel.test
+    networks:
+      - sail
+    restart: unless-stopped

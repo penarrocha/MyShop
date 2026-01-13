@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="VinylHub logo">
+  <defs>
+    <!-- Base dark disc gradient -->
+    <radialGradient id="disc" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#0b0f12"/>
+      <stop offset="55%" stop-color="#0f161a"/>
+      <stop offset="100%" stop-color="#070a0c"/>
+    </radialGradient>
+
+    <!-- Soft highlight on the top-left -->
+    <radialGradient id="highlight" cx="35%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Outer disc -->
+  <circle cx="300" cy="300" r="285" fill="url(#disc)"/>
+
+  <!-- Subtle highlight -->
+  <circle cx="300" cy="300" r="285" fill="url(#highlight)"/>
+
+  <!-- Groove rings (strokes) -->
+  <g fill="none" stroke="#1b2a2f" stroke-opacity="0.35">
+    <circle cx="300" cy="300" r="250" stroke-width="10"/>
+    <circle cx="300" cy="300" r="220" stroke-width="8" stroke-opacity="0.28"/>
+    <circle cx="300" cy="300" r="195" stroke-width="7" stroke-opacity="0.24"/>
+    <circle cx="300" cy="300" r="170" stroke-width="6" stroke-opacity="0.20"/>
+    <circle cx="300" cy="300" r="150" stroke-width="6" stroke-opacity="0.18"/>
+    <circle cx="300" cy="300" r="132" stroke-width="5" stroke-opacity="0.16"/>
+  </g>
+
+  <!-- Color arcs (donut segments) -->
+  <!-- Top green arc -->
+  <path
+    d="M 32.19 202.52
+       A 285 285 0 0 1 567.81 202.52
+       L 530.22 216.21
+       A 245 245 0 0 0 69.78 216.21
+       Z"
+    fill="#2f6b4a"
+    fill-opacity="0.55"
+  />
+
+  <!-- Bottom beige arc -->
+  <path
+    d="M 567.81 397.48
+       A 285 285 0 0 1 32.19 397.48
+       L 69.78 383.79
+       A 245 245 0 0 0 530.22 383.79
+       Z"
+    fill="#d2b47a"
+    fill-opacity="0.72"
+  />
+
+  <!-- Outer green ring (soft) -->
+  <circle cx="300" cy="300" r="272" fill="none" stroke="#2f6b4a" stroke-opacity="0.45" stroke-width="26"/>
+
+  <!-- Label -->
+  <circle cx="300" cy="300" r="95" fill="#f8fafc"/>
+  <circle cx="300" cy="300" r="16" fill="#0b0f12"/>
+
+  <!-- Small inner shadow ring -->
+  <circle cx="300" cy="300" r="115" fill="none" stroke="#0b0f12" stroke-opacity="0.35" stroke-width="10"/>
+</svg>

@@ -1,0 +1,19 @@
+<nav class="hidden md:flex space-x-8">
+    <a href="{{ route('welcome') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('welcome') ? 'text-primary-600 font-semibold' : '' }}">Inicio</a>
+    <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('products.*') ? 'text-primary-600 font-semibold' : '' }}">Productos</a>
+    <a href="{{ route('categories.index') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('categories.*') ? 'text-primary-600 font-semibold' : '' }}">Categorías</a>
+    <a href="{{ route('offers.index') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('offers.*') ? 'text-primary-600 font-semibold' : '' }}">Ofertas</a>
+    <a href="{{ route('contact') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('contact') ? 'text-primary-600 font-semibold' : '' }}">Contacto</a>
+    @auth
+    <a href="{{ route('account.index') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('account.*') || request()->routeIs('profile.*') ? 'text-primary-600 font-semibold' : '' }}">Mi cuenta</a>
+    @if(auth()->user()->hasRole('admin'))
+    <a href="{{ route('admin.products.index') }}"
+        class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('admin.*') ? 'text-primary-600 font-semibold' : '' }}">
+        Administración
+    </a>
+    @endif
+    @endauth
+    @guest
+    <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary-600 transition {{ request()->routeIs('login') ? 'text-primary-600 font-semibold' : '' }}">Login</a>
+    @endguest
+</nav>
