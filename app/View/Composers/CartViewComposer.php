@@ -7,7 +7,9 @@ use Illuminate\View\View;
 
 class CartViewComposer
 {
-    public function __construct(private CartService $cart) {}
+    public function __construct(private CartService $cart)
+    {
+    }
 
     public function compose(View $view): void
     {

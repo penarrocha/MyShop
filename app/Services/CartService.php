@@ -26,7 +26,7 @@ class CartService
 
     /**
      * @return Collection<int, Product>
-     * 
+     *
      * Devuelve los productos del carrito, listos para vistas HTML
      */
     public function products(): Collection

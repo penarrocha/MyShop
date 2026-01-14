@@ -8,7 +8,6 @@ use App\Support\HasUniqueSlug;
 
 class Order extends Model
 {
-
     use SoftDeletes;
 
     use HasUniqueSlug;

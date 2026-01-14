@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Support\CloudinaryUrl;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 /**
  * @property int $id
  * @property string $name

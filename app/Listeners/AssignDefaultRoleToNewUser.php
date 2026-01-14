@@ -12,7 +12,7 @@ class AssignDefaultRoleToNewUser
     {
         $customer = Role::where('slug', 'customer')->first();
 
-        // Si no existiere el Rol customer 
+        // Si no existiere el Rol customer
         if (! $customer) {
             return;
         }

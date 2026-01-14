@@ -9,7 +9,6 @@ use App\Models\Order;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     protected $policies = [
         Order::class => \App\Policies\OrderPolicy::class,
     ];

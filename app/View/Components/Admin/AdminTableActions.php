@@ -10,18 +10,17 @@ class AdminTableActions extends Component
         public ?string $editUrl = null,
         public ?string $deleteUrl = null,
         public ?string $itemName = null,
-
         // Textos del modal
         public string $deleteTitle = 'Eliminar',
         public ?string $deleteMessage = null,
         public string $confirmText = 'Eliminar',
         public string $cancelText = 'Cancelar',
-
         // Control
         public bool $showEdit = true,
         public bool $showDelete = true,
         public bool $disabledDelete = false,
-    ) {}
+    ) {
+    }
 
     public function render()
     {

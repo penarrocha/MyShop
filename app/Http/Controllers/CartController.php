@@ -10,7 +10,9 @@ use Illuminate\Contracts\View\View;
 
 class CartController extends Controller
 {
-    public function __construct(private CartService $cart) {}
+    public function __construct(private CartService $cart)
+    {
+    }
 
     public function index(): View
     {

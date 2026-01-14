@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Http;
 
 class RecaptchaV3 implements ValidationRule
 {
-    public function __construct(private string $action) {}
+    public function __construct(private string $action)
+    {
+    }
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
