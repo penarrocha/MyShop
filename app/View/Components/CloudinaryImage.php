@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\View\Component;
+use Illuminate\Contracts\View\View;
 use App\Support\CloudinaryUrl;
 
 class CloudinaryImage extends Component
@@ -48,7 +49,7 @@ class CloudinaryImage extends Component
             ->toUrl();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('components.cloudinary-image');
     }
