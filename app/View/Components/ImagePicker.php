@@ -2,9 +2,10 @@
 
 namespace App\View\Components;
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use App\Support\CloudinaryUrl;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
+use Illuminate\Contracts\View\View;
 
 class ImagePicker extends Component
 {
@@ -56,7 +57,6 @@ class ImagePicker extends Component
         $this->removeName = $removeName;
         $this->showRemove = $showRemove;
 
-        //$this->defaultUrl = $this->buildUrl(null);
         $this->defaultUrl = $this->buildUrl(env('APP_NO_IMAGE'));
         $this->initialUrl = $this->buildUrl($this->publicId);
     }
@@ -67,14 +67,10 @@ class ImagePicker extends Component
             ? $publicId
             : config('app.no_image');
 
-        $transform = env('CLOUDINARY_IMAGE_TRANSFORM', 'c_limit,f_auto,q_auto');
-
-        return Cloudinary::image($publicId)
-            ->addTransformation($transform)
-            ->toUrl();
+        return CloudinaryUrl::url($publicId);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('components.image-picker');
     }

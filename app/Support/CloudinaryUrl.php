@@ -6,6 +6,9 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class CloudinaryUrl
 {
+    /**
+     * @method static \CloudinaryLabs\CloudinaryLaravel\CloudinaryImage image(string $publicId)
+     */
     public static function url(string $publicId, ?int $width = null, ?int $height = null): string
     {
         $transformations = [];
@@ -21,6 +24,7 @@ class CloudinaryUrl
         // Opciones por defecto
         $transformations[] = env('CLOUDINARY_IMAGE_TRANSFORM', 'c_limit,f_auto,q_auto');
 
+        /** @phpstan-ignore-next-line */
         return Cloudinary::image($publicId)
             ->addTransformation(implode(',', $transformations))
             ->toUrl();
