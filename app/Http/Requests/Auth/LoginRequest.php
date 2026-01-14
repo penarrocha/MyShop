@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        $needsRecaptcha = RateLimiter::attempts($this->throttleKey()) >= env('RECAPTCHA_WITHIN_ATTEMTPS', 2);
+        $needsRecaptcha = RateLimiter::attempts($this->throttleKey()) >= config('RECAPTCHA_WITHIN_ATTEMTPS', 2);
 
         return [
             'email' => ['required', 'string', 'email'],

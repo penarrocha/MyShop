@@ -45,16 +45,6 @@ class AdminUserController extends Controller
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
-    /*
-    public function show(User $user): View
-    {
-        $user->load(['roles', 'addresses', 'orders']);
-
-        $roles = Role::orderBy('name')->get();
-
-        return view('admin.users.show', compact('user', 'roles'));
-    }
-    */
     public function update(Request $request, User $user): RedirectResponse
     {
         $roleSlugs = Role::pluck('slug')->all();

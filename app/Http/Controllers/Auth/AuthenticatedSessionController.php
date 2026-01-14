@@ -21,7 +21,7 @@ class AuthenticatedSessionController extends Controller
     {
         $email = old('email', '');
         $key = Str::transliterate(Str::lower($email) . '|' . $request->ip());
-        $threshold = (int) env('RECAPTCHA_WITHIN_ATTEMPTS', 2);
+        $threshold = (int) config('RECAPTCHA_WITHIN_ATTEMPTS', 2);
         $recaptchaRequired = $email !== '' && RateLimiter::attempts($key) >= $threshold;
 
         return view('auth.login', compact('recaptchaRequired'));

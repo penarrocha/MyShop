@@ -9,6 +9,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Support\CloudinaryUrl;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property float $price
+ * @property int $category_id
+ * @property int|null $offer_id
+ * @property string|null $image
+ * @property \App\Models\Offer|null $offer
+ * @property int|null $quantity
+ * @property float|null $final_price
+ * @property string $image_url
+ */
 class Product extends Model
 {
     use HasFactory;
@@ -18,7 +33,7 @@ class Product extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = ['name', 'slug', 'description', 'price', 'category_id', 'offer_id', 'image'];
 

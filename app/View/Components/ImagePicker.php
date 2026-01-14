@@ -57,7 +57,7 @@ class ImagePicker extends Component
         $this->removeName = $removeName;
         $this->showRemove = $showRemove;
 
-        $this->defaultUrl = $this->buildUrl(env('APP_NO_IMAGE'));
+        $this->defaultUrl = $this->buildUrl(config('APP_NO_IMAGE'));
         $this->initialUrl = $this->buildUrl($this->publicId);
     }
 

@@ -5,6 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string|null $label
+ * @property string $recipient_name
+ * @property string|null $phone
+ * @property string $line1
+ * @property string|null $line2
+ * @property string $city
+ * @property string $province
+ * @property string $postcode
+ * @property string $country
+ * @property bool $is_default
+ */
 class Address extends Model
 {
 

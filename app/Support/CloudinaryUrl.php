@@ -22,9 +22,8 @@ class CloudinaryUrl
         }
 
         // Opciones por defecto
-        $transformations[] = env('CLOUDINARY_IMAGE_TRANSFORM', 'c_limit,f_auto,q_auto');
+        $transformations[] = config('CLOUDINARY_IMAGE_TRANSFORM', 'c_limit,f_auto,q_auto');
 
-        /** @phpstan-ignore-next-line */
         return Cloudinary::image($publicId)
             ->addTransformation(implode(',', $transformations))
             ->toUrl();

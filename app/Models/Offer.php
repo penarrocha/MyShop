@@ -10,6 +10,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Carbon;
 
+/**
+ * @property bool $active
+ * @property \Illuminate\Support\Carbon|null $start_date
+ * @property \Illuminate\Support\Carbon|null $end_date
+ * @property float $discount_percentage
+ *
+ * @property bool $is_in_window
+ * @property string $is_active_label
+ * @property string $window_label
+ */
 class Offer extends Model
 {
     use HasFactory;
@@ -19,7 +29,7 @@ class Offer extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -44,25 +54,31 @@ class Offer extends Model
         'window_label',
     ];
 
-    public function isInWindow(): Attribute
+    protected function isInWindow(): Attribute
     {
-        return Attribute::get(function () {
-            if (!$this->start_date || !$this->end_date) {
-                return false;
+        return Attribute::make(
+            get: function (): bool {
+                if ($this->start_date === null || $this->end_date === null) {
+                    return false;
+                }
+
+                return now()->between($this->start_date, $this->end_date);
             }
-
-            return now()->between($this->start_date, $this->end_date);
-        });
+        );
     }
 
-    public function isActiveLabel(): Attribute
+    protected function isActiveLabel(): Attribute
     {
-        return Attribute::get(fn() => $this->active ? 'Activa' : 'Inactiva');
+        return Attribute::make(
+            get: fn(): string => $this->active ? 'Activa' : 'Inactiva'
+        );
     }
 
-    public function windowLabel(): Attribute
+    protected function windowLabel(): Attribute
     {
-        return Attribute::get(fn() => $this->is_in_window ? 'En vigor' : 'Expirada');
+        return Attribute::make(
+            get: fn(): string => $this->is_in_window ? 'En vigor' : 'Expirada'
+        );
     }
 
 
