@@ -8,7 +8,7 @@ use App\Support\HasUniqueSlug;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 
 class AdminCategoryController extends Controller

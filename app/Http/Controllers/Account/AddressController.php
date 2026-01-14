@@ -9,7 +9,7 @@ use App\Models\Address;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller

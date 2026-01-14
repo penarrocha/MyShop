@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class WelcomeController extends Controller
 {

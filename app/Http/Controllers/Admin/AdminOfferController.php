@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use App\Support\HasUniqueSlug;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\Contracts\View\View;
 
 class AdminOfferController extends Controller
 {
@@ -17,7 +19,7 @@ class AdminOfferController extends Controller
         return 'oferta';
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $query = Offer::query();
 
@@ -51,12 +53,12 @@ class AdminOfferController extends Controller
         return view('admin.offers.index', compact('offers'));
     }
 
-    public function create()
+    public function create(): View
     {
         return view('admin.offers.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $data = $this->validated($request);
 
@@ -81,12 +83,12 @@ class AdminOfferController extends Controller
             ->with('success', 'Oferta creada correctamente.');
     }
 
-    public function edit(Offer $offer)
+    public function edit(Offer $offer): View
     {
         return view('admin.offers.edit', compact('offer'));
     }
 
-    public function update(Request $request, Offer $offer)
+    public function update(Request $request, Offer $offer): RedirectResponse
     {
         $data = $this->validated($request, $offer->id);
 
@@ -110,7 +112,7 @@ class AdminOfferController extends Controller
             ->with('success', 'Oferta actualizada correctamente.');
     }
 
-    public function destroy(Offer $offer)
+    public function destroy(Offer $offer): RedirectResponse
     {
         $offer->delete();
 

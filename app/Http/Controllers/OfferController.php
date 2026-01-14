@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class OfferController extends Controller
 {

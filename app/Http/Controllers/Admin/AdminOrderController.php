@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class AdminOrderController extends Controller
 {
@@ -59,7 +60,7 @@ class AdminOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order): RedirectResponse
     {
         $order->delete();
         return redirect()->route('admin.orders.index')

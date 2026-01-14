@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Offer;
 use App\Support\HasUniqueSlug;
 
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
