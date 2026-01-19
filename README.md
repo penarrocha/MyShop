@@ -1,8 +1,8 @@
-# MyShop 🛒  
+# Vinylhub 🛒  
 Tienda online desarrollada como proyecto final del CFGS Desarrollo de Aplicaciones Web (DAW).
 
 ## 📌 Descripción
-MyShop es una aplicación web de comercio electrónico desarrollada con **Laravel 12**, orientada a un entorno académico.  
+Vinylhub es una aplicación web de comercio electrónico desarrollada con **Laravel 12**, orientada a un entorno académico.  
 Incluye catálogo de productos, carrito de compra, wishlist persistente, gestión de pedidos y un panel de administración con control de acceso por roles.
 
 El proyecto está dockerizado y desplegado en **Amazon AWS EC2** con IP elástica (sin dominio, uso académico).
@@ -72,6 +72,7 @@ El proyecto incluye **pruebas automáticas** desarrolladas con PHPUnit.
 
 ### Servicios externos
 - El servicio **Google reCAPTCHA v3** se **mockea** en los tests para evitar dependencias externas.
+- El servicio **Cloudinary** se emplea para alojar las imágenes de las categorías y productos
 
 ### Ejecutar los tests
 ```bash
