@@ -5,9 +5,6 @@
         </h2>
     </x-slot>
 
-    @include('account._layout')
-
-    @section('account.content')
     <div class="mb-4">
         <div class="text-sm text-gray-600">Estado: {{ $order->status }}</div>
         <div class="text-sm text-gray-600">Total: {{ number_format($order->total, 2) }} €</div>
@@ -33,5 +30,4 @@
         </div>
     </div>
     @endforeach
-    @endsection
 </x-app-layout>
