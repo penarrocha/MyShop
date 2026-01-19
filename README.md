@@ -24,6 +24,15 @@ http://18.214.56.106/
 
 ---
 
+## APIs externas
+- **Google ReCAPTCHA v3**: en las pantallas de login y registro de usuario
+- **Cloudinary**: Servicio de alojamiento de imágenes
+
+## API propia
+- La aplicación expone un endpoint propio que devuelve información del carrito en formato JSON (/cart/state), consumido mediante peticiones AJAX desde el frontend. Este endpoint actúa como una API interna que separa lógica de presentación y datos.
+
+---
+
 ## ⚙️ Funcionalidades principales
 ### Usuario
 - Registro e inicio de sesión
@@ -72,7 +81,6 @@ El proyecto incluye **pruebas automáticas** desarrolladas con PHPUnit.
 
 ### Servicios externos
 - El servicio **Google reCAPTCHA v3** se **mockea** en los tests para evitar dependencias externas.
-- El servicio **Cloudinary** se emplea para alojar las imágenes de las categorías y productos
 
 ### Ejecutar los tests
 ```bash
