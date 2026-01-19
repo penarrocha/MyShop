@@ -72,10 +72,12 @@ RUN apk add --no-cache \
     freetype-dev libjpeg-turbo-dev libpng-dev \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install pdo_mysql intl mbstring zip gd \
-  && docker-php-ext-enable opcache \
+  && pecl install redis \
+  && docker-php-ext-enable redis \
   && apk del \
     $PHPIZE_DEPS \
     icu-dev oniguruma-dev libzip-dev freetype-dev libjpeg-turbo-dev libpng-dev
+
 
 # Opcache INI
 #COPY docker/prod/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
