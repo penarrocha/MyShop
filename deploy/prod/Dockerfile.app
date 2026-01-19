@@ -93,7 +93,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
   && chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]
 
 
 ############################################
