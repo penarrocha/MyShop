@@ -25,3 +25,7 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 *:Zone.Identifier
+
+# Local dumps (do not commit)
+*.sql
+*.sql.gz
