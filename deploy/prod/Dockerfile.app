@@ -64,19 +64,26 @@ RUN composer dump-autoload --no-dev --optimize \
 FROM php:8.5-fpm-alpine AS app
 WORKDIR /var/www/html
 
-# System deps + toolchain + extensiones PHP para Laravel
-# (NO compilar opcache: se habilita)
 RUN apk add --no-cache \
+    # runtime libs (NO se deben borrar)
+    icu-libs \
+    libzip \
+    libpng \
+    libjpeg-turbo \
+    freetype \
+    # build deps (solo para compilar)
     $PHPIZE_DEPS \
-    icu-dev oniguruma-dev libzip-dev zip unzip \
-    freetype-dev libjpeg-turbo-dev libpng-dev \
+    icu-dev oniguruma-dev libzip-dev \
+    libpng-dev libjpeg-turbo-dev freetype-dev \
+    zip unzip \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install pdo_mysql intl mbstring zip gd \
   && pecl install redis \
   && docker-php-ext-enable redis \
   && apk del \
     $PHPIZE_DEPS \
-    icu-dev oniguruma-dev libzip-dev freetype-dev libjpeg-turbo-dev libpng-dev
+    icu-dev oniguruma-dev libzip-dev \
+    libpng-dev libjpeg-turbo-dev freetype-dev
 
 
 # Opcache INI
