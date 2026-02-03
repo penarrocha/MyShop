@@ -33,3 +33,4 @@ Thumbs.db
 # Local dumps (do not commit)
 *.sql
 *.sql.gz
+myshop-chatgpt.zip
