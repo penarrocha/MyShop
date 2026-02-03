@@ -3,12 +3,33 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\Cart;
+use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 
 class CartService
 {
     private string $sessionKey = 'cart';
 
+    private function isPersistent(): bool
+    {
+        return Auth::check();
+    }
+
+    /**
+     * Obtiene, o crea, carrito activo del usuario autenticado
+     */
+    private function userCart(): Cart
+    {
+        return Cart::firstOrCreate(
+            ['user_id' => Auth::id(), 'status' => 'active']
+        );
+    }
+
+    /*
+    * Session helpers (invitado)
+    */
     public function raw(): array
     {
         return session()->get($this->sessionKey, []);
@@ -21,7 +42,13 @@ class CartService
 
     public function clear(): void
     {
-        session()->forget($this->sessionKey);
+        if (!$this->isPersistent()) {
+            session()->forget($this->sessionKey);
+            return;
+        }
+
+        $cart = $this->userCart();
+        $cart->items()->delete();
     }
 
     /**
@@ -31,18 +58,40 @@ class CartService
      */
     public function products(): Collection
     {
-        $cart = $this->raw();
+        // INVITADO -> session (tal cual lo tenías)
+        if (!$this->isPersistent()) {
+            $cart = $this->raw();
 
-        if (empty($cart)) {
+            if (empty($cart)) {
+                return collect();
+            }
+
+            $products = Product::with(['category', 'offer'])
+                ->whereIn('id', array_keys($cart))
+                ->get();
+
+            return $products->map(function (Product $product) use ($cart) {
+                $product->quantity = $cart[$product->id]['quantity'];
+                return $product;
+            });
+        }
+
+        // LOGUEADO -> BD (persistente)
+        $cart = $this->userCart();
+
+        $items = CartItem::where('cart_id', $cart->id)->get();
+        if ($items->isEmpty()) {
             return collect();
         }
 
+        $qtyByProductId = $items->pluck('quantity', 'product_id')->all();
+
         $products = Product::with(['category', 'offer'])
-            ->whereIn('id', array_keys($cart))
+            ->whereIn('id', array_keys($qtyByProductId))
             ->get();
 
-        return $products->map(function (Product $product) use ($cart) {
-            $product->quantity = $cart[$product->id]['quantity'];
+        return $products->map(function (Product $product) use ($qtyByProductId) {
+            $product->quantity = (int) ($qtyByProductId[$product->id] ?? 1);
             return $product;
         });
     }
@@ -85,38 +134,119 @@ class CartService
 
     public function add(int $productId, int $quantity = 1): void
     {
-        $cart = $this->raw();
+        $quantity = max(1, $quantity);
 
-        if (isset($cart[$productId])) {
-            $cart[$productId]['quantity'] += $quantity;
-        } else {
-            $cart[$productId] = ['quantity' => $quantity];
-        }
+        // INVITADO -> session
+        if (!$this->isPersistent()) {
+            $cart = $this->raw();
 
-        $this->put($cart);
-    }
+            if (isset($cart[$productId])) {
+                $cart[$productId]['quantity'] += $quantity;
+            } else {
+                $cart[$productId] = ['quantity' => $quantity];
+            }
 
-    public function update(int $productId, int $quantity): void
-    {
-        $cart = $this->raw();
-
-        if (!isset($cart[$productId])) {
+            $this->put($cart);
             return;
         }
 
-        $cart[$productId]['quantity'] = max(1, $quantity);
-        $this->put($cart);
+        // LOGUEADO -> BD
+        $cart = $this->userCart();
+
+        $item = CartItem::firstOrNew([
+            'cart_id' => $cart->id,
+            'product_id' => $productId,
+        ]);
+
+        $item->quantity = ($item->exists ? (int) $item->quantity : 0) + $quantity;
+
+        // Guardar el precio unitario del momento (opcional pero “pro”)
+        if (empty($item->unit_price)) {
+            $product = Product::findOrFail($productId);
+            $item->unit_price = (float) $product->final_price;
+        }
+
+        $item->save();
+    }
+
+
+    public function update(int $productId, int $quantity): void
+    {
+        $quantity = max(1, $quantity);
+
+        // INVITADO -> session
+        if (!$this->isPersistent()) {
+            $cart = $this->raw();
+
+            if (!isset($cart[$productId])) {
+                return;
+            }
+
+            $cart[$productId]['quantity'] = $quantity;
+            $this->put($cart);
+            return;
+        }
+
+        // LOGUEADO -> BD
+        $cart = $this->userCart();
+
+        $item = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $productId)
+            ->first();
+
+        if (!$item) {
+            return;
+        }
+
+        $item->quantity = $quantity;
+        $item->save();
     }
 
     public function remove(int $productId): void
     {
-        $cart = $this->raw();
+        // INVITADO -> session
+        if (!$this->isPersistent()) {
+            $cart = $this->raw();
 
-        if (!isset($cart[$productId])) {
+            if (!isset($cart[$productId])) {
+                return;
+            }
+
+            unset($cart[$productId]);
+            $this->put($cart);
             return;
         }
 
-        unset($cart[$productId]);
-        $this->put($cart);
+        // LOGUEADO -> BD
+        $cart = $this->userCart();
+
+        CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $productId)
+            ->delete();
+    }
+
+    /**
+     * Merge: pasa el carrito de session a BD (para usar en Login listener)
+     */
+    public function mergeSessionIntoUserCart(): void
+    {
+        if (!$this->isPersistent()) {
+            return;
+        }
+
+        $sessionCart = $this->raw();
+        if (empty($sessionCart)) {
+            return;
+        }
+
+        $cart = $this->userCart();
+
+        foreach ($sessionCart as $productId => $row) {
+            $qty = max(1, (int) ($row['quantity'] ?? 1));
+            $this->add((int) $productId, $qty); // add() ya escribe en BD si está logueado
+        }
+
+        // Limpiar session después de merge
+        session()->forget($this->sessionKey);
     }
 }
