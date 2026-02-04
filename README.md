@@ -36,9 +36,9 @@ http://18.214.56.106/
 ## ⚙️ Funcionalidades principales
 ### Usuario
 - Registro e inicio de sesión
-- Wishlist persistente
+- Carrito de la compra persistente en base de datos
+- Wishlist persistente en base de datos
 - Gestión de pedidos propios
-- Carrito de compra por sesión
 
 ### Catálogo
 - Productos organizados por categorías
