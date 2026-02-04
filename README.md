@@ -3,7 +3,11 @@ Tienda online desarrollada como proyecto final del CFGS Desarrollo de Aplicacion
 
 ## 📌 Descripción
 Vinylhub es una aplicación web de comercio electrónico desarrollada con **Laravel 12**, orientada a un entorno académico.  
-Incluye catálogo de productos, carrito de compra, wishlist persistente, gestión de pedidos y un panel de administración con control de acceso por roles.
+Incluye catálogo de productos, carrito de compra y wishlist persistentes en base de datos, gestión de pedidos y un panel de administración con control de acceso por roles (**RBAC**).
+
+Todas las rutas públicas son URL-Friendly e incluyen breadcrumb personalizado.
+
+El carrito de la compra es AJAX y la cuenta de cliente permite añadir un número indeterminado de direcciones de envío
 
 El proyecto está dockerizado y desplegado en **Amazon AWS EC2** con IP elástica (sin dominio, uso académico).
 
@@ -38,6 +42,7 @@ http://18.214.56.106/
 - Registro e inicio de sesión
 - Carrito de la compra persistente en base de datos
 - Wishlist persistente en base de datos
+- Libreta de direcciones
 - Gestión de pedidos propios
 
 ### Catálogo
@@ -82,6 +87,6 @@ El proyecto incluye **pruebas automáticas** desarrolladas con PHPUnit.
 ### Servicios externos
 - El servicio **Google reCAPTCHA v3** se **mockea** en los tests para evitar dependencias externas.
 
-### Ejecutar los tests
+### Desarrollo local (Laravel Sail)
 ```bash
 ./vendor/bin/sail test
